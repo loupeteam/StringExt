@@ -24,6 +24,9 @@ extern "C"
 
 #include <string.h>
 
+#ifdef _NOT_BR
+#include "NOT_BR.h"
+#endif
 
 //-----------------------------------------------------------------------------
 // Generate a time stamp string from a DTStructure variable

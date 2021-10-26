@@ -11,6 +11,11 @@
 
 #include "string.h"
 
+#ifdef _NOT_BR
+#define brsitoa(a, b) itoa(a, b)
+#define brsftoa(a, b) ftoa(a, b)
+#endif
+
 // Define some basic macros 
 #ifndef MIN
 #define MIN(a, b) ((a) < (b) ? (a) : (b))

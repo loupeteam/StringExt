@@ -24,6 +24,11 @@ extern "C"
 
 #include <string.h>
 
+#if !defined(_SG4) || defined(_NOT_BR)
+#include "bur.h"
+#include "NOT_BR.h"
+#include "astime.h"
+#endif
 
 /********************************************************************/
 /* Generate a time stamp string from a DATE_AND_TIME variable		*/
