@@ -10,6 +10,11 @@
 	};
 #endif
 
+#if !defined(_SG4) || defined(_NOT_BR)
+#include "bur.h"
+#include "NOT_BR.h"
+#endif
+
 
 #include <string.h>
 
