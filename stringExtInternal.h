@@ -2,21 +2,25 @@
 #include "bur.h"
 #endif
 
+#include <stdio.h>
+#include "math.h"
+#include "string.h"
+#include <stdlib.h>
 #ifndef brsitoa
     #ifndef itoa
-        #include <stdio.h>
-        #define brsitoa(a,b) sprintf(b,"%d",a)
+        #define brsitoa(a,b) sprintf((b),"%d",(a))
     #else
-        #include <stdlib.h>
-        #define brsitoa(a,b) strlen(itoa(a,(char*)b,10))
+        #define brsitoa(a,b) strlen(itoa((a),(char*)(b),10))
     #endif
 #endif
 
 
 #ifndef brsftoa
-#include "math.h"
-#include "string.h"
-#define brsftoa(a,b) ftoa((a),(char*)(b),14)
+    #ifndef ftoa
+        #define brsftoa(a,b) sprintf((b),"%f",(a))
+    #else
+        #define brsftoa(a,b) ftoa( (a), (b))
+    #endif
 #endif
 
 #ifndef DTStructure 
