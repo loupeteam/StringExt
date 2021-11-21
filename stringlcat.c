@@ -42,7 +42,7 @@
 
 #include "string.h"
 
-#ifndef HAVE_STRLCAT
+#ifndef strlcat
 	/*
  * '_cups_strlcat()' - Safely concatenate two strings.
  */

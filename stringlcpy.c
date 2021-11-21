@@ -11,7 +11,7 @@
 #include "string.h"
 
 
-#ifndef HAVE_STRLCPY
+#ifndef strlcpy
 	/*
  * '_cups_strlcpy()' - Safely copy two strings.
  */

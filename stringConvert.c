@@ -42,6 +42,8 @@ unsigned long string2wstring(unsigned long pDest, const unsigned long pSrc, unsi
 	return(s - src);	/* count does not include NUL */
 }
 
+#ifdef brwcslen
+
 unsigned long wstring2string(unsigned long pDest, const unsigned long pSrc, unsigned long dSize)
 {
 	char *dst = (char*) pDest;
@@ -85,3 +87,5 @@ unsigned char wchar2char(unsigned short c) {
 		return ((char)c);
 	}
 }
+
+#endif
