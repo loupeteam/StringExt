@@ -14,8 +14,3 @@ add_definitions(-D_BUR_FORMAT_BRELF)
 add_definitions(-D_REPLACE_CONST)
 
 add_library(${PROJECT_NAME} ${StringExt_SRC})
-
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../includes/)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../includes/loupe/Includes/)
-
-
