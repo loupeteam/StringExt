@@ -1,3 +1,4 @@
+0.14.3 - Add support for strptime in GCC6
 0.14.2 - Add stringpTime() and stringfTime()
 0.14.1 - Add formatString()
 0.14.0 - Critical fix to work with BR library AsIecCon
