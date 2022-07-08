@@ -10,7 +10,10 @@
 #endif
 
 #include "string.h"
+
+#define __XSI_VISIBLE 1
 #include "time.h"
+
 
 unsigned long stringfTime(unsigned long dest, unsigned long destSize, unsigned long format, DATE_AND_TIME time) {
 	if(!dest || !destSize || !format) return 0; // Return if null pointers or if destSize is 0
