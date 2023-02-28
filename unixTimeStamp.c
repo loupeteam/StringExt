@@ -26,7 +26,7 @@ extern "C"
 
 
 /********************************************************************/
-/* Generate a unix time stamp string from a DATE_AND_TIME pointer	*/
+/* Generate a unix time stamp string from a DTStructure pointer		*/
 /********************************************************************/
 
 
@@ -49,75 +49,25 @@ if( 	(pDest == 0)
 
 
 /************************************************/
-/* Generate String 								*/
+/* Generate Unix Time Stamp						*/
 /************************************************/
 
-/* 'YYYY-MM-DD HH:MM:SS' */
+DTStructure*		DTStruct;
+unsigned long long*		timeStamp64;
 
-STRING			TempString[6];
-DTStructure		DTStruct;
+DTStruct = (DTStructure*) pSrc;
+timeStamp64 = (unsigned long long*) pDest;
 
-DT_TO_DTStructure( DT1, (UDINT)&DTStruct );
-
-
-/* Clear String */
-
-strcpy( (char*)pTimestamp, "" );
-
-
-/* Year */
-
-brsitoa(DTStruct.year, (UDINT)TempString);
-
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-strncat( (char*)pTimestamp, "-", TimestampLength - strlen((char*)pTimestamp) );
-
-
-/* Month */
-
-brsitoa( DTStruct.month, (UDINT)TempString );
-
-if( DTStruct.month < 10 ) strncat( (char*)pTimestamp, "0" , TimestampLength - strlen((char*)pTimestamp) ); 
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-strncat( (char*)pTimestamp, "-", TimestampLength - strlen((char*)pTimestamp) );
-
-
-/* Day */
-
-brsitoa( DTStruct.day, (UDINT)TempString );
-
-if( DTStruct.day < 10 ) strncat( (char*)pTimestamp, "0" , TimestampLength - strlen((char*)pTimestamp) ); 
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-strncat( (char*)pTimestamp, " ", TimestampLength - strlen((char*)pTimestamp) );
-
-
-/* Hour */
-
-brsitoa( DTStruct.hour, (UDINT)TempString );
-
-if( DTStruct.hour < 10 ) strncat( (char*)pTimestamp, "0" , TimestampLength - strlen((char*)pTimestamp) ); 
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-strncat( (char*)pTimestamp, ":", TimestampLength - strlen((char*)pTimestamp) );
-
-
-/* Minute */
-
-brsitoa( DTStruct.minute, (UDINT)TempString );
-
-if( DTStruct.minute < 10 ) strncat( (char*)pTimestamp, "0" , TimestampLength - strlen((char*)pTimestamp) ); 
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-strncat( (char*)pTimestamp, ":", TimestampLength - strlen((char*)pTimestamp) );
-
-
-/* Second */
-
-brsitoa( DTStruct.second, (UDINT)TempString );
-
-if( DTStruct.second < 10 ) strncat( (char*)pTimestamp, "0" , TimestampLength - strlen((char*)pTimestamp) ); 
-strncat( (char*)pTimestamp, TempString, TimestampLength - strlen((char*)pTimestamp) );
-
-
-return strlen( (char*)pTimestamp );
+//convert everything to milliseconds and add it to the 64 bit ULINT
+*timeStamp64 = DTStruct->millisec
+		+ DTStruct->second*1000
+		+ DTStruct->minute*60000000
+		+ DTStruct->hour*3600000000
+		+ DTStruct->day*86400000000
+		+ DTStruct->month*2628000000000
+		+ DTStruct->year*31540000000000;
+	
+return 1;
 
 
 } // End Fn //
