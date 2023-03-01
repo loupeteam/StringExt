@@ -31,7 +31,7 @@ extern "C"
 
 
 
-unsigned long unixTimeStamp(unsigned long pDest, unsigned long pSrc)
+unsigned long unixTimeStamp(unsigned long pDest, unsigned long pSrc, unsigned long startYear)
 {
 	
 	
@@ -58,14 +58,20 @@ unsigned long long*		timeStamp64;
 DTStruct = (DTStructure*) pSrc;
 timeStamp64 = (unsigned long long*) pDest;
 
+	
+// Check for valid start year //
+if(DTStruct->year < startYear){
+	return 0;
+}
+	
 //convert everything to milliseconds and add it to the 64 bit ULINT
 *timeStamp64 = DTStruct->millisec
-		+ DTStruct->second*1000
-		+ DTStruct->minute*60000000
-		+ DTStruct->hour*3600000000
-		+ DTStruct->day*86400000000
-		+ DTStruct->month*2628000000000
-		+ DTStruct->year*31540000000000;
+	+ DTStruct->second*1000
+	+ DTStruct->minute*60000
+	+ DTStruct->hour*3600000
+	+ DTStruct->day*86400000
+	+ DTStruct->month*262800000
+	+ (DTStruct->year-startYear)*31540000000;
 	
 return 1;
 
