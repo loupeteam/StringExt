@@ -14,8 +14,9 @@
 extern "C"
 {
 #endif
-
+	
 	#include "StringExt.h"
+	#include <stdint.h>
 
 #ifdef __cplusplus
 };
@@ -35,45 +36,49 @@ unsigned long unixTimeStamp(unsigned long pDest, unsigned long pSrc, unsigned lo
 {
 	
 	
-/************************************************/
-/* Check for invalid inputs						*/
-/************************************************/
+	/************************************************/
+	/* Check for invalid inputs						*/
+	/************************************************/
 
-if( 	(pDest == 0)
-	||	(pSrc == 0)
+	if( 	(pDest == 0)
+		||	(pSrc == 0)
 	){
 		
-	return 0;
+		return 0;
 		
-} // Check for null pointer //
+	} // Check for null pointer //
 
 
-/************************************************/
-/* Generate Unix Time Stamp						*/
-/************************************************/
+	/************************************************/
+	/* Generate Unix Time Stamp						*/
+	/************************************************/
+	unsigned long long myVar;
+	UDINT size = sizeof(myVar);
+	
 
-DTStructure*		DTStruct;
-unsigned long long*		timeStamp64;
+	DTStructure*		DTStruct;
+	unsigned long long*		timeStamp64;
 
-DTStruct = (DTStructure*) pSrc;
-timeStamp64 = (unsigned long long*) pDest;
+	DTStruct = (DTStructure*) pSrc;
+	timeStamp64 = (unsigned long long*) pDest;
 
 	
-// Check for valid start year //
-if(DTStruct->year < startYear){
-	return 0;
-}
+	// Check for valid start year //
+	if(DTStruct->year < startYear){
+		return 0;
+	}
 	
-//convert everything to milliseconds and add it to the 64 bit ULINT
-*timeStamp64 = DTStruct->millisec
-	+ DTStruct->second*1000
-	+ DTStruct->minute*60000
-	+ DTStruct->hour*3600000
-	+ DTStruct->day*86400000
-	+ DTStruct->month*262800000
-	+ (DTStruct->year-startYear)*31540000000;
+	//convert everything to milliseconds and add it to the 64 bit ULINT
+	*timeStamp64 = DTStruct->millisec
+		+ DTStruct->second*1000
+		+ DTStruct->minute*60000
+		+ DTStruct->hour*3600000
+		+ DTStruct->day*86400000
+		+ DTStruct->month*262800000
+		+ (DTStruct->year-startYear)*31540000000;
 	
-return 1;
+	
+	return size;
 
 
 } // End Fn //
