@@ -3,7 +3,7 @@
  ********************************************************************
  * Library: StringExt
  * File: dttomsec.c
- * Author: David Blackburn
+ * Author: James Jakeway
  * Created: March 28, 2012
  ********************************************************************
  * Implementation of library StringExt
