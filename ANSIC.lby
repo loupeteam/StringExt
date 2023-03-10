@@ -25,7 +25,7 @@
     <File Description="String cat with max length">stringlcat.c</File>
     <File Description="String &lt;-&gt; WString">stringConvert.c</File>
     <File Description="Formats a string similar to printf">FormatString.c</File>
-    <File Description="Creates a Unix Time Stamp">unixTimeStamp.c</File>
+    <File Description="Creates millisecond count from date and time">dttomsec.c</File>
     <File Description="Time formatting/parsing functions">time.cpp</File>
     <File>heap.cpp</File>
   </Files>
