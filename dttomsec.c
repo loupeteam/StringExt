@@ -48,9 +48,11 @@ unsigned long dttomsec(unsigned long pDest, unsigned long pSrc)
 	/************************************************/
 	/* Generate millisecond Count					*/
 	/************************************************/
-	unsigned long long myVar;
-	UDINT size = sizeof(myVar);
-	
+	UDINT epochYear = 1970;
+	UDINT daysFromPrevMonth[12] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+	UDINT daysSinceEpoch;
+	UDINT leapYearDayCount;
+	UDINT i;
 
 	DTStructure*		DTStruct;
 	unsigned long long*		timeStamp64;
@@ -58,18 +60,33 @@ unsigned long dttomsec(unsigned long pDest, unsigned long pSrc)
 	DTStruct = (DTStructure*) pSrc;
 	timeStamp64 = (unsigned long long*) pDest;
 	
+	// Find the number of days since the epoch year
+	// Loop through years to find the count leap years
+	leapYearDayCount = 0;
+	for(i=epochYear; i<DTStruct->year; i++){
+		if (i % 4 == 0){
+			leapYearDayCount++;
+			if (i % 100 == 0){
+				leapYearDayCount--;
+				if (i % 400 ==0){
+					leapYearDayCount++;
+				}
+			}
+		}
+	} 
 	
+	//Add in days from previous months, leap year days, and days from previous years
+	daysSinceEpoch = daysFromPrevMonth[DTStruct->month-1] + leapYearDayCount + (((DTStruct->year-1)-epochYear)*365);	
+		
 	//convert everything to milliseconds and add it to the 64 bit ULINT
 	*timeStamp64 = DTStruct->millisec
 		+ DTStruct->second*1000
 		+ DTStruct->minute*60000
 		+ DTStruct->hour*3600000
-		+ DTStruct->day*86400000
-		+ DTStruct->month*262800000
-		+ (DTStruct->year-startYear)*31540000000;
+		+ daysSinceEpoch*86400000;
 	
 	
-	return size;
+	return daysSinceEpoch;
 
 
 } // End Fn //
