@@ -40,12 +40,8 @@ unsigned long dttomsec(unsigned long pDest, unsigned long pSrc)
 	/* Check for invalid inputs						*/
 	/************************************************/
 
-	if( 	(pDest == 0)
-		||	(pSrc == 0)
-	){
-		
+	if((pDest == 0) || (pSrc == 0)){
 		return 0;
-		
 	} // Check for null pointer //
 
 
