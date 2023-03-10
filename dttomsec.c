@@ -32,7 +32,7 @@ extern "C"
 
 
 
-unsigned long dttomsec(unsigned long pDest, unsigned long pSrc, unsigned long startYear)
+unsigned long dttomsec(unsigned long pDest, unsigned long pSrc)
 {
 	
 	
@@ -61,12 +61,7 @@ unsigned long dttomsec(unsigned long pDest, unsigned long pSrc, unsigned long st
 
 	DTStruct = (DTStructure*) pSrc;
 	timeStamp64 = (unsigned long long*) pDest;
-
 	
-	// Check for valid start year //
-	if(DTStruct->year < startYear){
-		return 0;
-	}
 	
 	//convert everything to milliseconds and add it to the 64 bit ULINT
 	*timeStamp64 = DTStruct->millisec

@@ -192,7 +192,6 @@ FUNCTION dttomsec : UDINT (*Converts a Date and Time to a 64 bit millisecond cou
 	VAR_INPUT
 		pDest : UDINT; (*Pointer to a 4 byte array that will hold the 64 bit unix time stamp*)
 		pSrc : UDINT; (*Pointer to the date and time type that will be converted to 64 bit unix time stamp*)
-		startYear : UDINT; (*The year that the time stamp will count milliseconds from*)
 	END_VAR
 END_FUNCTION
 
