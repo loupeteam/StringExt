@@ -76,7 +76,7 @@ unsigned long dttomsec(unsigned long pDest, unsigned long pSrc)
 	} 
 	
 	//Add in days from previous months, leap year days, and days from previous years
-	daysSinceEpoch = daysFromPrevMonth[DTStruct->month-1] + leapYearDayCount + (((DTStruct->year-1)-epochYear)*365);	
+	daysSinceEpoch = daysFromPrevMonth[DTStruct->month-1] + DTStruct->day + leapYearDayCount + (((DTStruct->year-1)-epochYear)*365);	
 		
 	//convert everything to milliseconds and add it to the 64 bit ULINT
 	*timeStamp64 = DTStruct->millisec
