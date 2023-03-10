@@ -2,7 +2,7 @@
  * COPYRIGHT -- Automation Resources Group
  ********************************************************************
  * Library: StringExt
- * File: unixTimeStamp.c
+ * File: dttomsec.c
  * Author: David Blackburn
  * Created: March 28, 2012
  ********************************************************************
@@ -27,12 +27,12 @@ extern "C"
 
 
 /********************************************************************/
-/* Generate a unix time stamp string from a DTStructure pointer		*/
+/* Generate a millisecond count from a DTStructure pointer			*/
 /********************************************************************/
 
 
 
-unsigned long unixTimeStamp(unsigned long pDest, unsigned long pSrc, unsigned long startYear)
+unsigned long dttomsec(unsigned long pDest, unsigned long pSrc, unsigned long startYear)
 {
 	
 	
@@ -50,7 +50,7 @@ unsigned long unixTimeStamp(unsigned long pDest, unsigned long pSrc, unsigned lo
 
 
 	/************************************************/
-	/* Generate Unix Time Stamp						*/
+	/* Generate millisecond Count					*/
 	/************************************************/
 	unsigned long long myVar;
 	UDINT size = sizeof(myVar);
