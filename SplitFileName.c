@@ -37,7 +37,7 @@ unsigned long SplitFileName(unsigned long pFileName, unsigned long pName, unsign
 	if(extLength > 0)
 		extLength = extLength - 1;
 	
-	STRING tempString[strLength];
+	STRING tempString[strLength+1];
 	
 	memcpy(&tempString, (void*)pFileName, strLength+1);
 	
