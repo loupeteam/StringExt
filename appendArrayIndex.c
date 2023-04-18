@@ -10,6 +10,8 @@
 	};
 #endif
 
+#include "stringExtInternal.h"
+
 
 #include <string.h>
 

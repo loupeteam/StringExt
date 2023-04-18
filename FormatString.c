@@ -10,17 +10,15 @@
 #endif
 
 #include "string.h"
+#include "stdlib.h"
+#include "stdio.h"
 
-// Define some basic macros 
-#ifndef MIN
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include "stringExtInternal.h"
+
+#ifndef DTStructure 
+#include "astime.h"
 #endif
-#ifndef MAX
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#endif
-#ifndef ARRAY_ENTRIES
-#define ARRAY_ENTRIES(array) (sizeof(array)/sizeof(array[0]))
-#endif
+
 
 /*
  * 

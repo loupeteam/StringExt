@@ -23,7 +23,9 @@ extern "C"
 
 
 #include <string.h>
-
+#include "stdlib.h"
+#include "stdio.h"
+#include "stringExtInternal.h"
 
 //-----------------------------------------------------------------------------
 // Generate a time stamp string from a DTStructure variable

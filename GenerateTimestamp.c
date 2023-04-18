@@ -21,9 +21,15 @@ extern "C"
 };
 #endif
 
-
 #include <string.h>
+#include "stdlib.h"
+#include "stdio.h"
 
+#include "stringExtInternal.h"
+
+#ifndef DTStructure 
+#include "astime.h"
+#endif
 
 /********************************************************************/
 /* Generate a time stamp string from a DATE_AND_TIME variable		*/
