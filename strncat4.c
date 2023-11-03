@@ -1,13 +1,11 @@
-/********************************************************************
- * COPYRIGHT -- ARG 
- ********************************************************************
- * Library: StringExt
+/*
  * File: strncat4.c
- * Author: davidblackburn
- * Created: February 13, 2014
- ********************************************************************
- * Implementation of library StringExt
- ********************************************************************/
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of StringExt, licensed under the MIT License.
+ * 
+ */
 
  
 #include <bur/plctypes.h>

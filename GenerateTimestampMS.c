@@ -1,13 +1,11 @@
-/********************************************************************
- * COPYRIGHT -- Automation Resources Group
- ********************************************************************
- * Library: StringExt
- * File: GenerateTimestamp.c
- * Author: Scott Claiborne
- * Created: February 14, 2018
- ********************************************************************
- * Implementation of library StringExt
- ********************************************************************/
+/*
+ * File: GenerateTimestampMS.c
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of StringExt, licensed under the MIT License.
+ * 
+ */
 
 #include <bur/plctypes.h>
 #ifdef __cplusplus
