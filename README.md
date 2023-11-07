@@ -14,4 +14,4 @@ To install using the Loupe Package Manager (LPM), in an initialized Automation S
 
 ## Licensing
 
-This project is primarily licensed under the [MIT License](LICENSE). 
+This project is licensed under the [MIT License](LICENSE). 
