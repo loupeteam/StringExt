@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Library Version="0.14.4" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
+  <Files>
+    <File Description="Exported data types">StringExt.typ</File>
+    <File Description="Exported constants">StringExt.var</File>
+    <File Description="Exported functions and function blocks">StringExt.fun</File>
+    <File Description="Strips the leading characters from a string">lstrip.c</File>
+    <File Description="Strips the trailing characters from a string">rstrip.c</File>
+    <File Description="Converts a string to a UDINT value, allowing values greater than the DINT maximum">atoui.c</File>
+    <File Description="Convert a UDINT to a string">uitoa.c</File>
+    <File Description="Converts a section of bytes to a hex string">ByteToHexString.c</File>
+    <File Description="Generate a time stamp string from a DATE_AND_TIME variable">GenerateTimestamp.c</File>
+    <File Description="Generate a time stamp string from a DTStructure">GenerateTimestampMS.c</File>
+    <File Description="Combine strings pSource1 through pSource4 into pDest, with ' / ' between source strings">strncat4.c</File>
+    <File Description="Converts a string to upper case">toupper.c</File>
+    <File Description="Converts a string to lower case">tolower.c</File>
+    <File Description="Converts output of GenerateTimestamp to DATE_AND_TIME">Timestamp_TO_DT.c</File>
+    <File Description="Appends an Array Index to a string">appendArrayIndex.c</File>
+    <File>HexStringToDINT.c</File>
+    <File>SplitFileName.c</File>
+    <File Description="String copy with max length">stringlcpy.c</File>
+    <File Description="String cat with max length">stringlcat.c</File>
+    <File Description="String &lt;-&gt; WString">stringConvert.c</File>
+    <File Description="Formats a string similar to printf">FormatString.c</File>
+    <File Description="Time formatting/parsing functions">time.cpp</File>
+    <File>heap.cpp</File>
+  </Files>
+  <Dependencies>
+    <Dependency ObjectName="astime" />
+    <Dependency ObjectName="AsBrStr" />
+    <Dependency ObjectName="AsBrWStr" />
+  </Dependencies>
+</Library>
