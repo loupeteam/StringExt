@@ -1,8 +1,13 @@
-
 VAR
-
-END_VAR
-
-VAR CONSTANT
-
+	prve : UDINT;
+	rve : STRING[80];
+	sign : UDINT;
+	decpt : UDINT;
+	ndigits : UDINT;
+	mode : UDINT;
+	val : LREAL;
+	calldtoa : BOOL;
+	len : UDINT;
+	string : ARRAY[0..3] OF STRING[80];
+	pString : UDINT;
 END_VAR
