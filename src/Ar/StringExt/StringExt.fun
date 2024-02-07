@@ -185,3 +185,16 @@ FUNCTION stringpTime : DATE_AND_TIME (*Parse time string*)
 		format : UDINT; (*Assumed format of time string*)
 	END_VAR
 END_FUNCTION
+
+FUNCTION stringdtoa : UDINT
+	VAR_INPUT
+		value: LREAL;
+		mode: UDINT;
+		ndigits: UDINT;
+		decpt: UDINT;
+		sign: UDINT;
+		rve: UDINT;
+	END_VAR
+END_FUNCTION
+
+
