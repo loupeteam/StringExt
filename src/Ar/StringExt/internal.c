@@ -5,14 +5,13 @@ extern "C"
 {
 #endif
 
-	
+#include "includes/rtkBase.h"
 
 #ifdef __cplusplus
 };
 #endif
 
-
-
+// semaphores cause cycle time violations
 //#define USE_SEMAPHORE 
 
 #ifdef USE_SEMAPHORE
@@ -37,11 +36,11 @@ static __thread RTK_CRIT_SEC_H criticalSection[2] = {0};
 void lockSelect(n) {
 	if(n > (sizeof(criticalSection)/sizeof(criticalSection[0]) - 1)) return;
 	if(!criticalSection[n]) CREATE(0, 1, &criticalSection[n]);
-	ACQUIRE(&criticalSection[n], 500L);
+	RTK_ERROR err = ACQUIRE(criticalSection[n], 500L);
 }
 
 void freeSelect(n) {
 	if(n > (sizeof(criticalSection)/sizeof(criticalSection[0]) - 1)) return;
 	if(!criticalSection[n]) return;
-	RELEASE(&criticalSection[n]);
+	RTK_ERROR err = RELEASE(criticalSection[n]);
 }
