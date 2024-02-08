@@ -27,6 +27,8 @@
     <Object Type="File" Description="Double to charcter array wrapper">stringdtoa.c</Object>
     <Object Type="File">heap_redirect.c</Object>
     <Object Type="File">tlsf.h</Object>
+    <Object Type="File">internal.h</Object>
+    <Object Type="File">internal.c</Object>
     <Object Type="Package">gdtoa</Object>
   </Objects>
   <Dependencies>
