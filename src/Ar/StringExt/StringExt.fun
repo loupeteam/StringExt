@@ -188,13 +188,9 @@ END_FUNCTION
 
 FUNCTION stringdtoa : UDINT
 	VAR_INPUT
-		value: LREAL;
-		mode: UDINT;
-		ndigits: UDINT;
-		decpt: UDINT;
-		sign: UDINT;
-		rve: UDINT;
+		value : LREAL;
+		buffer : STRING[80];
+		ndigits : UDINT;
+		bufferSize : UDINT;
 	END_VAR
 END_FUNCTION
-
-

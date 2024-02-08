@@ -18,14 +18,18 @@
 #endif
 
 #include "string.h"
-#include "dtoa.h"
+
+
+
+#include "./gdtoa/gdtoa.h"
 
 int init = 0;
 
-unsigned long stringdtoa(double value, unsigned long mode, unsigned long ndigits, unsigned long decpt, unsigned long sign, unsigned long rve) {
+unsigned long stringdtoa(double value, char* buffer, unsigned long ndig, unsigned long bufferSize) {
 	if(!init) {
 		init = 1;
 		
 	}
-	return (unsigned long) dtoa(value, mode, ndigits, (int*) decpt, (int*) sign, (char**)rve);
+	
+	return g_dfmt(buffer, &value, ndig, bufferSize);
 }
