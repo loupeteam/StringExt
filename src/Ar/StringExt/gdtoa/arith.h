@@ -12,6 +12,13 @@
 #define IEEE_8087
 #define Arith_Kind_ASL 1
 
+// initial private memory pool size - when exceeded, malloc
+// default is 2304 bytes
+// max required memory for a single thread of dtoa is 7400 bytes
+// we choose 16384 bytes because it is the nearest power of 2 greater than 2x the max required memory for a single thread of dtoa
+// this allows 2 threads of dtoa without need for mallocs
+#define PRIVATE_MEM 16384
+
 #define ENABLE_MULTITHREAD
 #ifdef ENABLE_MULTITHREAD
 
