@@ -1,16 +1,9 @@
 VAR
-	prve : UDINT;
-	rve : STRING[80];
-	sign : UDINT;
-	decpt : UDINT;
 	ndigits : UDINT;
-	mode : UDINT;
 	val : LREAL;
 	calldtoa : BOOL;
 	len : UDINT;
-	i : USINT;
-	str : ARRAY[0..59] OF STRING[80];
-	buffer : ARRAY[0..3] OF STRING[80];
 	string : ARRAY[0..3] OF STRING[80];
+	buffer : ARRAY[0..3] OF STRING[80];
 	pString : UDINT;
 END_VAR
