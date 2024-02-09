@@ -24,12 +24,12 @@
     <Object Type="File" Description="String &lt;-&gt; WString">stringConvert.c</Object>
     <Object Type="File" Description="Formats a string similar to printf">FormatString.c</Object>
     <Object Type="File" Description="Time formatting/parsing functions">time.cpp</Object>
-    <Object Type="File" Description="Double to charcter array wrapper">stringdtoa.c</Object>
-    <Object Type="File">heap_redirect.c</Object>
-    <Object Type="File">tlsf.h</Object>
-    <Object Type="File">internal.h</Object>
-    <Object Type="File">internal.c</Object>
-    <Object Type="Package">gdtoa</Object>
+    <Object Type="File" Description="dtoa and similar functions">stringdtoa.c</Object>
+    <Object Type="File" Description="heap redirction using tlsf">heap_redirect.c</Object>
+    <Object Type="File" Description="tlsf forward declaration file">tlsf.h</Object>
+    <Object Type="File" Description="Header for internal functions">internal.h</Object>
+    <Object Type="File" Description="Internal functions">internal.c</Object>
+    <Object Type="Package" Description="gdtoa library">gdtoa</Object>
   </Objects>
   <Dependencies>
     <Dependency ObjectName="astime" />
