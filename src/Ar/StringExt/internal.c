@@ -23,7 +23,7 @@ static __thread RTK_SEM_H criticalSection[2] = {0};
 #define ACQUIRE(section, wait) RtkAcquireSemaphore(section, wait)
 #define RELEASE(section) RtkReleaseSemaphore(section)
 
-#else
+#else // if USE_SEMAPHORE
 #include "includes/rtkCriticalSection.h"
 
 static __thread RTK_CRIT_SEC_H criticalSection[2] = {0};
@@ -31,7 +31,7 @@ static __thread RTK_CRIT_SEC_H criticalSection[2] = {0};
 #define CREATE(name, max, section) RtkCreateCriticalSection(name, section)
 #define ACQUIRE(section, wait) RtkEnterCriticalSection(section)
 #define RELEASE(section) RtkLeaveCriticalSection(section)
-#endif
+#endif // if USE_SEMAPHORE
 
 void lockSelect(n) {
 	if(n > (sizeof(criticalSection)/sizeof(criticalSection[0]) - 1)) return;
