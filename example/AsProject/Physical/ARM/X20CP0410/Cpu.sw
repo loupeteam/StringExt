@@ -92,7 +92,7 @@
     <LibraryObject Name="Arnc0man" Source="Libraries.Motion.Arnc0man.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="Arnc0mx" Source="Libraries.Motion.Arnc0mx.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="TRF_LIB" Source="Libraries.Motion.TRF_LIB.lby" Memory="UserROM" Language="binary" Debugging="true" />
-    <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="ANSIC" AdditionalIncludeDirectories="\..\..\src\Ar\StringExt\includes\" AdditionalLibraryDirectories="\..\..\src\Ar\StringExt\SG4\Arm\" AdditionalLibraries="AR rtk_lib" Debugging="true" />
+    <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="ANSIC" AdditionalIncludeDirectories="\..\..\src\Ar\StringExt\includes\" AdditionalLibraryDirectories="\..\..\src\Ar\StringExt\SG4\Arm\|\..\..\src\Ar\StringExt\SG4\" AdditionalLibraries="AR rtk_lib" Debugging="true" />
     <LibraryObject Name="tlsf" Source="Libraries.Loupe.tlsf.lby" Memory="None" Language="ANSIC" Debugging="true" />
   </Libraries>
 </SwConfiguration>
