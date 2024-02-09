@@ -19,17 +19,19 @@
 
 #include "string.h"
 
-
-
 #include "./gdtoa/gdtoa.h"
 
-int init = 0;
 
-unsigned long stringdtoa(double value, char* buffer, unsigned long ndig, unsigned long bufferSize) {
-	if(!init) {
-		init = 1;
-		
-	}
-	
+unsigned long stringdtoa(double value, plcstring* buffer, unsigned long ndig, unsigned long bufferSize) {	
 	return g_dfmt(buffer, &value, ndig, bufferSize);
+}
+unsigned long stringftoa(float value, plcstring* buffer, unsigned long ndig, unsigned long bufferSize) {	
+	return g_ffmt(buffer, &value, ndig, bufferSize);
+}
+
+double stringatod(plcstring* value, plcstring** pEnd) {
+	return strtod(value, pEnd);
+}
+float stringatof(plcstring* value, plcstring** pEnd) {
+	return strtof(value, pEnd);
 }
