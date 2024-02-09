@@ -204,14 +204,14 @@ FUNCTION stringftoa : UDINT
 	END_VAR
 END_FUNCTION
 
-FUNCTION stringatod : LREAL
+FUNCTION stringstrtod : LREAL
 	VAR_INPUT
 		value : STRING[80];
 		pEnd : REFERENCE TO STRING[80];
 	END_VAR
 END_FUNCTION
 
-FUNCTION stringatof : REAL
+FUNCTION stringstrtof : REAL
 	VAR_INPUT
 		value : STRING[80];
 		pEnd : REFERENCE TO STRING[80];

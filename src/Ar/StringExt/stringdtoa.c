@@ -29,9 +29,9 @@ unsigned long stringftoa(float value, plcstring* buffer, unsigned long ndig, uns
 	return g_ffmt(buffer, &value, ndig, bufferSize);
 }
 
-double stringatod(plcstring* value, plcstring** pEnd) {
+double stringstrtod(plcstring* value, plcstring** pEnd) {
 	return strtod(value, pEnd);
 }
-float stringatof(plcstring* value, plcstring** pEnd) {
+float stringstrtof(plcstring* value, plcstring** pEnd) {
 	return strtof(value, pEnd);
 }
