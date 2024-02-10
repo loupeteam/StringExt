@@ -1,3 +1,4 @@
+0.15.0 - Add dtoa, strtod and float variants 
 0.14.4 - Fix bug in SplitFileName()
 0.14.3 - Add support for strptime in GCC6
 0.14.2 - Add stringpTime() and stringfTime()
