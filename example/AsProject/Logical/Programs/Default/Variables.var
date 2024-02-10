@@ -1,8 +1,9 @@
-
 VAR
-
-END_VAR
-
-VAR CONSTANT
-
+	ndigits : UDINT;
+	val : LREAL;
+	calldtoa : BOOL;
+	len : UDINT;
+	string : ARRAY[0..3] OF STRING[80];
+	buffer : ARRAY[0..3] OF STRING[80];
+	pString : UDINT;
 END_VAR
