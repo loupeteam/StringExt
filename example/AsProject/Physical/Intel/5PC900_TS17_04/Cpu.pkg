@@ -16,7 +16,6 @@
     <Object Type="Package">mappView</Object>
     <Object Type="Package">mappVision</Object>
     <Object Type="Package">mappCockpit</Object>
-    <Object Type="Package">Motion</Object>
   </Objects>
   <Configuration ModuleId="5PC900.TS17-04">
     <AutomationRuntime Version="C4.90" />
