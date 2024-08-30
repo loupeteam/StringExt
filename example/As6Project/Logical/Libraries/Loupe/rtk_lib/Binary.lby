@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Library Version="6.0.0" SubType="Binary" xmlns="http://br-automation.co.at/AS/Library">
+  <Files>
+    <File>arErrno.h</File>
+    <File>arexport.h</File>
+    <File>arInternetTypes.h</File>
+    <File>arNetworkConvert.h</File>
+    <File>arSelect.h</File>
+    <File>arSocket.h</File>
+    <File>arState.h</File>
+    <File>bootModeApi.h</File>
+    <File>cosyApi.h</File>
+    <File>cosyReadApi.h</File>
+    <File>cosyWriteApi.h</File>
+    <File>hostApi.h</File>
+    <File>iecType.h</File>
+    <File>pvElementIteratorApi.h</File>
+    <File>rtk.h</File>
+    <File>rtkBase.h</File>
+    <File>rtkCriticalSection.h</File>
+    <File>rtkFifo.h</File>
+    <File>rtkMemory.h</File>
+    <File>rtkMisc.h</File>
+    <File>rtkObject.h</File>
+    <File>rtkPlainFifo.h</File>
+    <File>rtkRtc.h</File>
+    <File>rtkSemaphore.h</File>
+    <File>rtkTask.h</File>
+    <File>rtkTimer.h</File>
+    <File>rtkTypes.h</File>
+    <File>SiosClock.h</File>
+  </Files>
+</Library>

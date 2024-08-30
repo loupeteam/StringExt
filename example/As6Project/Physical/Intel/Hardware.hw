@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version=4.11.5.46 FileVersion="4.9"?>
+<?AutomationStudio Version=6.0.2.177 FileVersion="4.9"?>
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
-  <Module Name="5AC901.IPLK-00" Type="5AC901.IPLK-00" Version="1.8.0.1">
+  <Module Name="5AC901.IPLK-00" Type="5AC901.IPLK-00" Version="2.0.0.0">
     <Connection Connector="SS" TargetModule="5PC910.SX02-00" TargetConnector="SS2" />
     <Connector Name="IF1">
       <Parameter ID="DNAConfiguration" Value="manual" />
@@ -36,8 +36,11 @@
     <Parameter ID="FTPAccessRight1" Value="0" />
     <Parameter ID="FTPdevice1" Value="ALL" />
     <Parameter ID="SdmColor" Value="colorRGB" />
+    <Parameter ID="ActivateFtpServer" Value="1" />
+    <Parameter ID="ActivateWebServer" Value="1" />
+    <Parameter ID="ActivateSdm" Value="1" />
   </Module>
-  <Module Name="5PC910.SX02-00" Type="5PC910.SX02-00" Version="2.1.0.0">
+  <Module Name="5PC910.SX02-00" Type="5PC910.SX02-00" Version="2.1.2.0">
     <Connector Name="IF1">
       <Parameter ID="AssignedOperatingSystem" Value="ARemb" />
     </Connector>

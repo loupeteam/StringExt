@@ -4,5 +4,6 @@
   <Objects>
     <Object Type="File">Role.role</Object>
     <Object Type="File">User.user</Object>
+    <Object Type="File">BRRole.brrole</Object>
   </Objects>
 </Package>
