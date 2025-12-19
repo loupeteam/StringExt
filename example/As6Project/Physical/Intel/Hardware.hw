@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version=6.0.2.177 FileVersion="4.9"?>
+<?AutomationStudio WorkingVersion="6.0" FileVersion="4.9"?>
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
-  <Module Name="5AC901.IPLK-00" Type="5AC901.IPLK-00" Version="2.0.0.0">
+  <Module Name="5AC901.IPLK-00" Type="5AC901.IPLK-00" Version="2.1.0.0">
     <Connection Connector="SS" TargetModule="5PC910.SX02-00" TargetConnector="SS2" />
     <Connector Name="IF1">
       <Parameter ID="DNAConfiguration" Value="manual" />
     </Connector>
   </Module>
-  <Module Name="5PC900_TS17_04" Type="5PC900.TS17-04" Version="2.1.1.0">
+  <Module Name="5PC900_TS17_04" Type="5PC900.TS17-04" Version="2.2.0.0">
     <Connection Connector="SY" TargetModule="5PC910.SX02-00" TargetConnector="SY1" />
     <Parameter ID="ConfigurationID" Value="Starter_StarterConfig" />
     <Parameter ID="UserPartitionSize" Value="300" />

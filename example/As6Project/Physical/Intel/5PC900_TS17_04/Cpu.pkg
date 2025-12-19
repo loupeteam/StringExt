@@ -18,7 +18,7 @@
     <Object Type="Package">mappCockpit</Object>
   </Objects>
   <Configuration ModuleId="5PC900.TS17-04">
-    <AutomationRuntime Version="6.0.2" />
+    <AutomationRuntime Version="6.5.1" />
     <Build GccVersion="11.3.0" PreBuildStep="" />
     <DefaultTargetMemory Tasks="UserROM" />
     <Safety SafetyRelease="0.0" />
