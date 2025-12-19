@@ -5,7 +5,7 @@ extern "C"
 {
 #endif
 
-#include "includes/rtkBase.h"
+#include <rtkBase.h>
 
 #ifdef __cplusplus
 };
@@ -15,7 +15,7 @@ extern "C"
 //#define USE_SEMAPHORE 
 
 #ifdef USE_SEMAPHORE
-#include "includes/rtkSemaphore.h"
+#include <rtkSemaphore.h>
 
 static __thread RTK_SEM_H criticalSection[2] = {0};
 
@@ -24,7 +24,7 @@ static __thread RTK_SEM_H criticalSection[2] = {0};
 #define RELEASE(section) RtkReleaseSemaphore(section)
 
 #else // if USE_SEMAPHORE
-#include "includes/rtkCriticalSection.h"
+#include <rtkCriticalSection.h>
 
 static __thread RTK_CRIT_SEC_H criticalSection[2] = {0};
 
