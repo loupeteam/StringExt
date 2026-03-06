@@ -54,7 +54,6 @@ Balloc
 	unsigned int len;
 #endif
 
-	ACQUIRE_DTOA_LOCK(0);
 	if ( (rv = freelist[k]) !=0) {
 		freelist[k] = rv->next;
 		}
@@ -75,7 +74,6 @@ Balloc
 		rv->k = k;
 		rv->maxwds = x;
 		}
-	FREE_DTOA_LOCK(0);
 	rv->sign = rv->wds = 0;
 	return rv;
 	}
@@ -89,10 +87,8 @@ Bfree
 #endif
 {
 	if (v) {
-		ACQUIRE_DTOA_LOCK(0);
 		v->next = freelist[v->k];
 		freelist[v->k] = v;
-		FREE_DTOA_LOCK(0);
 		}
 	}
 
@@ -383,12 +379,10 @@ pow5mult
 	if ((p5 = p5s) == 0) {
 		/* first time */
 #ifdef MULTIPLE_THREADS
-		ACQUIRE_DTOA_LOCK(1);
 		if (!(p5 = p5s)) {
 			p5 = p5s = i2b(625);
 			p5->next = 0;
 			}
-		FREE_DTOA_LOCK(1);
 #else
 		p5 = p5s = i2b(625);
 		p5->next = 0;
@@ -404,12 +398,10 @@ pow5mult
 			break;
 		if ((p51 = p5->next) == 0) {
 #ifdef MULTIPLE_THREADS
-			ACQUIRE_DTOA_LOCK(1);
 			if (!(p51 = p5->next)) {
 				p51 = p5->next = mult(p5,p5);
 				p51->next = 0;
 				}
-			FREE_DTOA_LOCK(1);
 #else
 			p51 = p5->next = mult(p5,p5);
 			p51->next = 0;

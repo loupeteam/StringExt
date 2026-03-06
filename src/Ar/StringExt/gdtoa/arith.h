@@ -6,7 +6,6 @@
 #ifndef ARITH_H_INCLUDED
 #define ARITH_H_INCLUDED
 
-#include "../tlsf.h"
 #include "../internal.h"
 
 #define IEEE_8087
@@ -24,8 +23,6 @@
 
 #define MULTIPLE_THREADS 
 
-#define ACQUIRE_DTOA_LOCK(n) lockSelect(n)
-#define FREE_DTOA_LOCK(n) freeSelect(n)
 
 // We likely want to use tlsf here but I dont see how as we can define FREE currently
 // Will the heap_redirect take care of this for us ?
