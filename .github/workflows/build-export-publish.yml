@@ -86,23 +86,29 @@ jobs:
           output:      ${{ env.EXPORT_DIR }}
           as-install:  ${{ steps.find-as.outputs.install-path }}
 
-      # Inject the release version into package.json and publish
+      # Generate package.json (version + deps from .lby) into the exported version dir
+      - name: Prepare package.json
+        id: prep-pkg
+        shell: pwsh
+        run: |
+          $versionDir = Get-ChildItem "$env:EXPORT_DIR/$env:LIBRARY" -Directory |
+                        Select-Object -First 1 -ExpandProperty FullName
+          "version-dir=$versionDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_OUTPUT
+
+      - name: Sync package.json from .lby
+        uses: loupeteam/br-actions/prepare-lpm-package@v1
+        with:
+          library-dir: ${{ env.LIBRARY_DIR }}
+          output-dir:  ${{ steps.prep-pkg.outputs.version-dir }}
+          version:     ${{ steps.version.outputs.version }}
+
       - name: Publish to GitHub Packages
         shell: pwsh
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Locate the exported version directory (e.g. export/StringExt/V0.16.0/)
-          $versionDir = Get-ChildItem "$env:EXPORT_DIR/$env:LIBRARY" -Directory |
-                        Select-Object -First 1 -ExpandProperty FullName
-
-          # Read the package.json template from source, update version, write to export
-          $pkg = Get-Content "$env:LIBRARY_DIR/package.json" | ConvertFrom-Json
-          $pkg.version = "${{ steps.version.outputs.version }}"
-          $pkg | ConvertTo-Json -Depth 10 | Set-Content (Join-Path $versionDir "package.json")
-
           Write-Host "Publishing @loupeteam/$($env:LIBRARY.ToLower())@${{ steps.version.outputs.version }}"
-          Push-Location $versionDir
+          Push-Location "${{ steps.prep-pkg.outputs.version-dir }}"
           npm publish
           Pop-Location
 
