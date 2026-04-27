@@ -1,0 +1,14 @@
+{
+  "name": "@loupeteam/stringext",
+  "version": "0.0.0",
+  "description": "String manipulation functions for B&R Automation Studio (ANSIC library)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loupeteam/StringExt.git"
+  },
+  "author": "Loupe",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
