@@ -11,6 +11,23 @@ on:
         options:
           - Build
           - Rebuild
+  # Build on PRs targeting any branch.
+  #
+  # SECURITY NOTE: this uses the standard `pull_request` trigger, which checks
+  # out the PR head but runs with read-only token and no access to secrets when
+  # the PR comes from a fork. Combined with the repo setting
+  #   Settings → Actions → General →
+  #   "Require approval for all outside collaborators"
+  # (or "Require approval for first-time contributors"), this means workflows
+  # from external contributors will not run on a self-hosted runner until a
+  # maintainer reviews the PR and clicks "Approve and run".
+  # Do NOT switch this to `pull_request_target` — that runs in the context of
+  # the base branch with full permissions and would expose the runner.
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
 
 jobs:
   build:
