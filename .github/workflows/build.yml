@@ -40,11 +40,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
       - name: Find AS6 build executable
         uses: loupeteam/br-actions/find-as6-build@v1
         id: find-as
@@ -55,7 +50,7 @@ jobs:
           exe-path:   ${{ steps.find-as.outputs.exe-path }}
           project:    ${{ env.PROJECT }}
           config:     Intel
-          build-mode: ${{ inputs.build-mode }}
+          build-mode: ${{ inputs.build-mode || 'Build' }}
 
       - name: Build ARM
         uses: loupeteam/br-actions/build-as-project@v1
@@ -63,7 +58,7 @@ jobs:
           exe-path:   ${{ steps.find-as.outputs.exe-path }}
           project:    ${{ env.PROJECT }}
           config:     ARM
-          build-mode: ${{ inputs.build-mode }}
+          build-mode: ${{ inputs.build-mode || 'Build' }}
 
       - name: Upload build diagnostics
         if: always()
