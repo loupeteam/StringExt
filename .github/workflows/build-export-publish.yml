@@ -86,23 +86,36 @@ jobs:
           output:      ${{ env.EXPORT_DIR }}
           as-install:  ${{ steps.find-as.outputs.install-path }}
 
-      # Inject the release version into package.json and publish
+      # The export action writes to {output}/{library}/V{version}/. Capture
+      # that path so downstream steps can write package.json into it and run
+      # `npm publish` from there.
+      - name: Locate exported version directory
+        id: export-dir
+        shell: pwsh
+        run: |
+          $path = Get-ChildItem "$env:EXPORT_DIR/$env:LIBRARY" -Directory |
+                  Select-Object -First 1 -ExpandProperty FullName
+          if (-not $path) {
+            Write-Error "No exported version directory found under $env:EXPORT_DIR/$env:LIBRARY"
+            exit 1
+          }
+          Write-Host "Exported version directory: $path"
+          "path=$path" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_OUTPUT
+
+      - name: Generate package.json
+        uses: loupeteam/br-actions/prepare-lpm-package@v1
+        with:
+          library-dir: ${{ env.LIBRARY_DIR }}
+          output-dir:  ${{ steps.export-dir.outputs.path }}
+          version:     ${{ steps.version.outputs.version }}
+
       - name: Publish to GitHub Packages
         shell: pwsh
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Locate the exported version directory (e.g. export/StringExt/V0.16.0/)
-          $versionDir = Get-ChildItem "$env:EXPORT_DIR/$env:LIBRARY" -Directory |
-                        Select-Object -First 1 -ExpandProperty FullName
-
-          # Read the package.json template from source, update version, write to export
-          $pkg = Get-Content "$env:LIBRARY_DIR/package.json" | ConvertFrom-Json
-          $pkg.version = "${{ steps.version.outputs.version }}"
-          $pkg | ConvertTo-Json -Depth 10 | Set-Content (Join-Path $versionDir "package.json")
-
           Write-Host "Publishing @loupeteam/$($env:LIBRARY.ToLower())@${{ steps.version.outputs.version }}"
-          Push-Location $versionDir
+          Push-Location "${{ steps.export-dir.outputs.path }}"
           npm publish
           Pop-Location
 
