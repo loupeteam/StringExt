@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version="6.0.2.177" WorkingVersion="6.0"?>
+<?AutomationStudio Version="6.5.1.7" WorkingVersion="6.5"?>
 <Project Description="Starter Automation Studio project." Version="1.0.0" Edition="Standard" EditionComment="Standard" xmlns="http://br-automation.co.at/AS/Project">
   <Communication />
   <ANSIC DefaultIncludes="true" />
