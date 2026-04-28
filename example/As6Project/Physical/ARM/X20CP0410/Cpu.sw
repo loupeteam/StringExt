@@ -31,6 +31,5 @@
     <LibraryObject Name="AsBrStr" Source="Libraries._AS.AsBrStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsBrWStr" Source="Libraries._AS.AsBrWStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="ANSIC" AdditionalIncludeDirectories="\..\..\src\Ar\StringExt\includes\" AdditionalLibraries="" Debugging="true" />
-    <LibraryObject Name="tlsf" Source="Libraries.Loupe.tlsf.lby" Memory="None" Language="Binary" Debugging="true" />
   </Libraries>
 </SwConfiguration>

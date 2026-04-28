@@ -25,7 +25,7 @@
     <Object Type="File" Description="Formats a string similar to printf">FormatString.c</Object>
     <Object Type="File" Description="Time formatting/parsing functions">time.cpp</Object>
     <Object Type="File" Description="dtoa and similar functions">stringdtoa.c</Object>
-    <Object Type="File" Description="heap redirction using tlsf">heap_redirect.c</Object>
+    <Object Type="File" Description="Declare heap size">bur_heap_size.c</Object>
     <Object Type="File" Description="Header for internal functions">internal.h</Object>
     <Object Type="File" Description="Internal functions">internal.c</Object>
     <Object Type="Package" Description="gdtoa library">gdtoa</Object>
