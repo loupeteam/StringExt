@@ -1,3 +1,7 @@
+1.1.0 - Add HexStringToUDINT() and UDINTToHexString()
+	Parse and format hex over the full 32-bit range, with 0x, 16# and $ prefixes
+	supported and parse failures reported separately from the value
+
 0.15.0 - Add dtoa, strtod and float variants 
 0.14.4 - Fix bug in SplitFileName()
 0.14.3 - Add support for strptime in GCC6

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
-<Library Version="1.0.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
+<Library Version="1.1.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Objects>
     <Object Type="File" Description="Exported data types">StringExt.typ</Object>
     <Object Type="File" Description="Exported constants">StringExt.var</Object>
@@ -18,6 +18,8 @@
     <Object Type="File" Description="Converts output of GenerateTimestamp to DATE_AND_TIME">Timestamp_TO_DT.c</Object>
     <Object Type="File" Description="Appends an Array Index to a string">appendArrayIndex.c</Object>
     <Object Type="File">HexStringToDINT.c</Object>
+    <Object Type="File" Description="Parses a hex string into a UDINT">HexStringToUDINT.c</Object>
+    <Object Type="File" Description="Formats a UDINT as a hex string">UDINTToHexString.c</Object>
     <Object Type="File">SplitFileName.c</Object>
     <Object Type="File" Description="String copy with max length">stringlcpy.c</Object>
     <Object Type="File" Description="String cat with max length">stringlcat.c</Object>
