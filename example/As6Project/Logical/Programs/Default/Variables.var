@@ -6,4 +6,8 @@ VAR
 	string : ARRAY[0..3] OF STRING[80];
 	buffer : ARRAY[0..3] OF STRING[80];
 	pString : UDINT;
+	hexTest : BOOL; (*Rising edge runs the HexStringToUDINT/UDINTToHexString self test*)
+	hexTestPass : UDINT; (*Cases that behaved as expected*)
+	hexTestFail : UDINT; (*Cases that did not*)
+	hexTestFirstFail : STRING[80]; (*Input of the first case that failed*)
 END_VAR
