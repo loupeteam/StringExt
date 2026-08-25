@@ -218,9 +218,13 @@ static void runFormatTest(void)
 			terminator stays 'X' and must never reach the destination */
 		for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
 
-		/* A format longer than the scratch buffer would overrun it and
-			leave no filler to detect an over-read with */
-		if(strlen(formatCases[i].Format) >= sizeof(Scratch)){
+		/* A format that fills the scratch buffer would overrun it, and one
+			that nearly fills it leaves no filler to detect an over-read with */
+		if(strlen(formatCases[i].Format) >= (sizeof(Scratch) - 8)){
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatCases[i].Format, 79);
+			}
 
 			formatTestFail++;
 			continue;
@@ -272,6 +276,9 @@ static void runFormatTest(void)
 
 
 	/* Destination fills before the format character is ever reached */
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	strcpy(Scratch, "abcdef%");
 
 	memset(Dest, 0, sizeof(Dest));
 	if( (formatString(Dest, 4, Scratch, &Args) == 3) && (strcmp(Dest, "abc") == 0) ) formatTestPass++; else formatTestFail++;
