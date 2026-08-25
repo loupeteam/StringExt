@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <Element ID="ClientServerConfiguration" Type="uacfg">
+    <Property ID="OpcUaCs" Value="1" />
+    <Group ID="Security">
+      <Group ID="MessageSecurity">
+        <Group ID="SecurityPolicies">
+          <Property ID="None" Value="1" />
+        </Group>
+      </Group>
+      <Group ID="Authentication">
+        <Group ID="UserIdentityTokens">
+          <Property ID="AnonymousIdentityToken" Value="1" />
+        </Group>
+      </Group>
+      <Group ID="Authorization">
+        <Group ID="AnonymousAccess">
+          <Property ID="UserRole0" Value="Everyone" />
+        </Group>
+      </Group>
+    </Group>
+  </Element>
+</Configuration>

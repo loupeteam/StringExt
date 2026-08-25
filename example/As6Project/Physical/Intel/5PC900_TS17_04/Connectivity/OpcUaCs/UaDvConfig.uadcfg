@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <Element ID="DefaultViewConfiguration" Type="uadcfg">
+    <Group ID="DefaultRolePermissions">
+      <Group ID="Role [0]">
+        <Property ID="Name" Value="Everyone" />
+        <Group ID="RolePermissions">
+          <Property ID="PermissionBrowse" Value="1" />
+          <Property ID="PermissionRead" Value="1" />
+          <Property ID="PermissionWrite" Value="1" />
+        </Group>
+      </Group>
+    </Group>
+  </Element>
+</Configuration>
