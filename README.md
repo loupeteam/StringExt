@@ -31,11 +31,15 @@ Build and deploy the `Intel` configuration to ARsim, then set the trigger from
 the Automation Studio watch window, or over OPC UA from any client — the four
 variables of each suite are published in `OpcUaMap.uad`.
 
-The `Intel` configuration enables the OPC UA server with an unencrypted
-endpoint and anonymous access, so that the self tests can be driven without
-credentials. That is appropriate for this example project, which exists to
-compile the library and run its tests; **do not copy this OPC UA configuration
-into a real machine.**
+The `Intel` configuration enables the OPC UA server on port 4840 and adds an
+unencrypted, anonymous endpoint, so that the self tests can be driven without
+putting a credential in this repository. The encrypted policies AS enables by
+default are still offered alongside it. Role `Everyone` is granted browse,
+read and write on the default view, so all eight variables above — results
+included, not just the triggers — are anonymously writable.
+
+That is appropriate for this project, which exists to compile the library and
+run its tests. **Do not copy this OPC UA configuration into a real machine.**
 
 ## Licensing
 
