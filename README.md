@@ -41,6 +41,12 @@ included, not just the triggers — are anonymously writable.
 That is appropriate for this project, which exists to compile the library and
 run its tests. **Do not copy this OPC UA configuration into a real machine.**
 
+The project pins OPC UA C/S 6.6.1, which is what the build runner carries.
+Publishing has been confirmed at runtime on 6.5.0 and 6.7.0; 6.6.1 has only
+been confirmed to build. 6.0.0 does **not** work — it compiles, and then the
+generated NodeSet fails to load with `BadNodeIdUnknown`, so nothing is
+published at all. If the variables do not appear, check this version first.
+
 ## Licensing
 
 This project is licensed under the [MIT License](LICENSE). 
