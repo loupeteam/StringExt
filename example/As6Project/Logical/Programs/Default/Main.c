@@ -159,6 +159,284 @@ static void runHexTest(void)
 }
 
 
+/* Self test for formatString().
+	Set formatTest to run it; formatTestFail must come back 0.
+
+	The format of each case is copied into a scratch buffer whose remaining
+	bytes are filled with 'X' after the terminator. A formatter that walks
+	past the terminator - as a trailing bare '%' once did - drags that filler
+	into the destination, so the expected-output compare catches it. Only the
+	trailing '%' path can reach past the terminator at all: every other branch
+	consumes a character it has already seen to be non-null. */
+
+typedef struct formatCase_typ {
+	char*	Format;
+	char*	Expect;
+} formatCase_typ;
+
+static const formatCase_typ formatCases[] = {
+
+	/* Trailing bare '%' - no command character follows it */
+	{ "value: %",		"value: "	},
+	{ "%",				""			},
+	{ "trail %d%",		"trail 42"	},
+	{ "%%%",			"%"			},
+
+	/* Ordinary substitutions */
+	{ "no format",		"no format"	},
+	{ "%d items",		"42 items"	},
+	{ "%d and %d",		"42 and -7"	},
+	{ "%s=%b",			"abc=TRUE"	},
+
+	/* Escaped percent, and an unknown command character */
+	{ "100%% done",		"100% done"	},
+	{ "a%zb",			"ab"		},
+
+	/* Both halves of %b, and a null entry in the string array, which is
+		skipped without consuming a later argument in its place */
+	{ "%b%b",			"TRUEFALSE"	},
+	{ "%s|%s|%s",		"abc||xyz"	},
+
+	/* One more %d than the argument array holds - the sixth is dropped,
+		which is why the expected output ends in a space */
+	{ "%d %d %d %d %d %d",	"42 -7 0 0 0 "	},
+
+	/* The %s array runs out the same way, but through a second condition:
+		a null entry is skipped by one test and an exhausted array by another */
+	{ "%s%s%s%s%s%s",		"abcxyz"		},
+
+	/* %i is an alias for %d and is otherwise never exercised */
+	{ "%i and %i",			"42 and -7"		},
+
+};
+
+
+/* Cases that need a destination smaller than the formatted result. Same
+	scratch buffer treatment; DestSize is passed to formatString() verbatim. */
+
+typedef struct formatSizeCase_typ {
+	char*			Format;
+	unsigned long	DestSize;
+	char*			Expect;
+} formatSizeCase_typ;
+
+static const formatSizeCase_typ formatSizeCases[] = {
+
+	/* Trailing '%' reached with only the reserved null byte left. The loop
+		still has room to enter the '%' branch, so this is a genuine pre-fix
+		failure - the old code stepped onto the filler and copied it */
+	{ "abcdef%",	8,	"abcdef"	},
+
+	/* Destination fills before the format character is ever reached */
+	{ "abcdef%",	4,	"abc"		},
+
+	/* Only the reserved null byte fits - nothing is written at all */
+	{ "%",			1,	""			},
+
+	/* Truncation part way through a substitution. %b is the only branch
+		whose lengths are hard coded rather than computed, so it is the
+		likeliest place for a length bug and gets its own case. */
+	{ "%d",			2,	"4"			},
+	{ "%s",			3,	"ab"		},
+	{ "%b",			3,	"TR"		},
+
+	/* Escaped percent with exactly one byte to spare, and an exact fit */
+	{ "%%",			2,	"%"			},
+	{ "abcd",		5,	"abcd"		},
+
+};
+
+
+static void runFormatTest(void)
+{
+	unsigned long		i;
+	unsigned long		j;
+	StrExtArgs_typ		Args;
+	char				Scratch[64];
+	char				Dest[80];
+	char				Expected[64];
+	signed long			Length;
+	unsigned long		Overrun;
+
+	formatTestPass=	0;
+	formatTestFail=	0;
+	strcpy((char*)formatTestFirstFail, "");
+
+	for(i=0; i<(sizeof(formatCases)/sizeof(formatCases[0])); i++){
+
+		memset(&Args, 0, sizeof(Args));
+		Args.i[0]=	42;
+		Args.i[1]=	-7;
+		Args.b[0]=	1;
+		Args.s[0]=	(unsigned long)"abc";
+		Args.s[2]=	(unsigned long)"xyz";
+
+		/* Fill with junk, then lay the format in - everything after the
+			terminator stays 'X' and must never reach the destination. The
+			last byte is terminated so that a library that does run off the
+			end stops here rather than walking out of the buffer. */
+		for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+		Scratch[sizeof(Scratch)-1]= '\0';
+
+		/* A format that fills the scratch buffer would overrun it, and one
+			that nearly fills it leaves no filler to detect an over-read with */
+		if(strlen(formatCases[i].Format) >= (sizeof(Scratch) - 8)){
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatCases[i].Format, 79);
+			}
+
+			formatTestFail++;
+			continue;
+
+		}
+
+		strcpy(Scratch, formatCases[i].Format);
+
+		memset(Dest, 0, sizeof(Dest));
+
+		Length=	formatString(Dest, sizeof(Dest), Scratch, &Args);
+
+		if(		(strcmp(Dest, formatCases[i].Expect) == 0)
+			&&	(Length == (signed long)strlen(formatCases[i].Expect))
+			){
+
+			formatTestPass++;
+
+		}
+		else{
+
+			formatTestFail++;
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatCases[i].Format, 79);
+			}
+
+		}
+
+	}
+
+
+	/* Null pointers */
+
+	if( formatString(Dest, sizeof(Dest), "abc", 0) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+	if( formatString(0, sizeof(Dest), "abc", &Args) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+	if( formatString(Dest, sizeof(Dest), 0, &Args) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+
+
+	/* Destinations too small for the formatted result. Arguments are set up
+		explicitly here rather than inherited from the loop above, so these
+		cases do not change meaning if that table is ever edited. */
+
+	memset(&Args, 0, sizeof(Args));
+	Args.i[0]=	42;
+	Args.i[1]=	-7;
+	Args.b[0]=	1;
+	Args.s[0]=	(unsigned long)"abc";
+	Args.s[2]=	(unsigned long)"xyz";
+
+	for(i=0; i<(sizeof(formatSizeCases)/sizeof(formatSizeCases[0])); i++){
+
+		for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+		Scratch[sizeof(Scratch)-1]= '\0';
+
+		if(strlen(formatSizeCases[i].Format) >= (sizeof(Scratch) - 8)){
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatSizeCases[i].Format, 79);
+			}
+
+			formatTestFail++;
+			continue;
+
+		}
+
+		strcpy(Scratch, formatSizeCases[i].Format);
+
+		/* Fill the whole destination, so that anything written at or past
+			DestSize survives as a 'Z' and can be checked for below */
+		memset(Dest, 'Z', sizeof(Dest));
+
+		Length=	formatString(Dest, formatSizeCases[i].DestSize, Scratch, &Args);
+
+		/* Nothing may be written at or beyond DestSize */
+		Overrun=	0;
+		for(j=formatSizeCases[i].DestSize; j<sizeof(Dest); j++){
+			if(Dest[j] != 'Z') Overrun= 1;
+		}
+
+		if(		(strcmp(Dest, formatSizeCases[i].Expect) == 0)
+			&&	(Length == (signed long)strlen(formatSizeCases[i].Expect))
+			&&	(Overrun == 0)
+			){
+
+			formatTestPass++;
+
+		}
+		else{
+
+			formatTestFail++;
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatSizeCases[i].Format, 79);
+			}
+
+		}
+
+	}
+
+
+	/* A destination size of 0 must write nothing at all - not even the
+		terminator, since there is no byte to put it in */
+
+	memset(Dest, 'Z', sizeof(Dest));
+	if( (formatString(Dest, 0, "abc", &Args) == 0) && (Dest[0] == 'Z') ) formatTestPass++; else formatTestFail++;
+
+
+	/* Reals. The exact rendering belongs to brsftoa(), not to this test, so
+		compare against what brsftoa() itself produces for the same value */
+
+	Args.r[0]=	1.5;
+	brsftoa(Args.r[0], (unsigned long)Expected);
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
+	strcpy(Scratch, "%r");
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (formatString(Dest, sizeof(Dest), Scratch, &Args) == (signed long)strlen(Expected))
+		&& (strcmp(Dest, Expected) == 0) ) formatTestPass++; else formatTestFail++;
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
+	strcpy(Scratch, "%f");
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (formatString(Dest, sizeof(Dest), Scratch, &Args) == (signed long)strlen(Expected))
+		&& (strcmp(Dest, Expected) == 0) ) formatTestPass++; else formatTestFail++;
+
+
+	/* A real large enough to exercise the library's 16 byte scratch buffer,
+		which 1.5 leaves almost entirely untouched. Expected is deliberately
+		wider than that buffer: brsftoa() cannot be told how much room it has,
+		so the length has to be measured somewhere it cannot do damage, and
+		then asserted to fit where formatString() will put it. */
+
+	Args.r[0]=	-1.2345e38;
+	brsftoa(Args.r[0], (unsigned long)Expected);
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
+	strcpy(Scratch, "%r");
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (strlen(Expected) < 16)
+		&& (formatString(Dest, sizeof(Dest), Scratch, &Args) == (signed long)strlen(Expected))
+		&& (strcmp(Dest, Expected) == 0) ) formatTestPass++; else formatTestFail++;
+
+}
+
+
 void _INIT ProgramInit(void)
 {
 }
@@ -180,6 +458,11 @@ void _CYCLIC ProgramCyclic(void)
 	if(hexTest) {
 		hexTest = 0;
 		runHexTest();
+	}
+
+	if(formatTest) {
+		formatTest = 0;
+		runFormatTest();
 	}
 
 	

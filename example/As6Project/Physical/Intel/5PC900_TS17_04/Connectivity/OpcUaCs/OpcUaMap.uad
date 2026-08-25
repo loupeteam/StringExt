@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="6.0"?>
+<OpcUaSource FileVersion="10">
+  <Aliases>
+    <ACLAliases />
+    <EURangeViolationAliases />
+    <EURangesAliases />
+    <EngineeringUnitAliases />
+  </Aliases>
+  <Module Name="&lt;Default&gt;">
+    <Task Name="Default">
+      <Variable Name="formatTest" />
+      <Variable Name="formatTestPass" />
+      <Variable Name="formatTestFail" />
+      <Variable Name="formatTestFirstFail" />
+      <Variable Name="hexTest" />
+      <Variable Name="hexTestPass" />
+      <Variable Name="hexTestFail" />
+      <Variable Name="hexTestFirstFail" />
+    </Task>
+  </Module>
+</OpcUaSource>

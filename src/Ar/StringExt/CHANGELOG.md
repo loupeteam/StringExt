@@ -1,3 +1,7 @@
+1.1.1 - Fix out of bounds read in formatString()
+	A format string ending in a bare '%' stepped the source pointer past the
+	null terminator and kept reading until it happened to hit a zero byte
+
 1.1.0 - Add HexStringToUDINT() and UDINTToHexString()
 	Parse and format hex over the full 32-bit range, with 0x, 16# and $ prefixes
 	supported and parse failures reported separately from the value

@@ -7,4 +7,7 @@
   <Motion RestartAcoposParameter="true" RestartInitParameter="true" />
   <Project StoreRuntimeInProject="false" />
   <Variables DefaultInitValue="0" DefaultRetain="false" DefaultVolatile="true" />
+  <TechnologyPackages>
+    <OpcUaCs Version="6.6.1" />
+  </TechnologyPackages>
 </Project>
