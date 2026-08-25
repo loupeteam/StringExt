@@ -159,6 +159,108 @@ static void runHexTest(void)
 }
 
 
+/* Self test for formatString().
+	Set formatTest to run it; formatTestFail must come back 0.
+
+	The format of each case is copied into a scratch buffer whose remaining
+	bytes are filled with 'X' after the terminator. A formatter that walks
+	past the terminator - as a trailing bare '%' once did - drags that filler
+	into the destination, so the expected-output compare catches it. */
+
+typedef struct formatCase_typ {
+	char*	Format;
+	char*	Expect;
+} formatCase_typ;
+
+static const formatCase_typ formatCases[] = {
+
+	/* Trailing bare '%' - no command character follows it */
+	{ "value: %",		"value: "	},
+	{ "%",				""			},
+	{ "trail %d%",		"trail 42"	},
+	{ "%%%",			"%"			},
+
+	/* Ordinary substitutions */
+	{ "no format",		"no format"	},
+	{ "%d items",		"42 items"	},
+	{ "%d and %d",		"42 and -7"	},
+	{ "%s=%b",			"abc=TRUE"	},
+
+	/* Escaped percent, and an unknown command character */
+	{ "100%% done",		"100% done"	},
+	{ "a%zb",			"ab"		},
+
+};
+
+
+static void runFormatTest(void)
+{
+	unsigned long		i;
+	unsigned long		j;
+	StrExtArgs_typ		Args;
+	char				Scratch[64];
+	char				Dest[80];
+	signed long			Length;
+
+	formatTestPass=	0;
+	formatTestFail=	0;
+	strcpy((char*)formatTestFirstFail, "");
+
+	for(i=0; i<(sizeof(formatCases)/sizeof(formatCases[0])); i++){
+
+		memset(&Args, 0, sizeof(Args));
+		Args.i[0]=	42;
+		Args.i[1]=	-7;
+		Args.b[0]=	1;
+		Args.s[0]=	(unsigned long)"abc";
+
+		/* Fill with junk, then lay the format in - everything after the
+			terminator stays 'X' and must never reach the destination */
+		for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+		strcpy(Scratch, formatCases[i].Format);
+
+		memset(Dest, 0, sizeof(Dest));
+
+		Length=	formatString(Dest, sizeof(Dest), Scratch, &Args);
+
+		if(		(strcmp(Dest, formatCases[i].Expect) == 0)
+			&&	(Length == (signed long)strlen(formatCases[i].Expect))
+			){
+
+			formatTestPass++;
+
+		}
+		else{
+
+			formatTestFail++;
+
+			if(strlen((char*)formatTestFirstFail) == 0){
+				strncpy((char*)formatTestFirstFail, formatCases[i].Format, 79);
+			}
+
+		}
+
+	}
+
+
+	/* Null pointers */
+
+	if( formatString(Dest, sizeof(Dest), "abc", 0) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+	if( formatString(0, sizeof(Dest), "abc", &Args) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+	if( formatString(Dest, sizeof(Dest), 0, &Args) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
+
+
+	/* Truncation - a trailing '%' with no room left must still terminate */
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (formatString(Dest, 4, "abcdef%", &Args) == 3) && (strcmp(Dest, "abc") == 0) ) formatTestPass++; else formatTestFail++;
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (formatString(Dest, 1, "%", &Args) == 0) && (strcmp(Dest, "") == 0) ) formatTestPass++; else formatTestFail++;
+
+}
+
+
 void _INIT ProgramInit(void)
 {
 }
@@ -180,6 +282,11 @@ void _CYCLIC ProgramCyclic(void)
 	if(hexTest) {
 		hexTest = 0;
 		runHexTest();
+	}
+
+	if(formatTest) {
+		formatTest = 0;
+		runFormatTest();
 	}
 
 	

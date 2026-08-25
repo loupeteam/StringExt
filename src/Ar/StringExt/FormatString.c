@@ -70,7 +70,14 @@ signed long formatString(plcstring* destination, unsigned long destSize, plcstri
 			*dst = '\0';
 		
 			// Consume the char and investigate the command 
-			switch (*(++src))
+			src++;
+			
+			// A '%' at the very end of the source has no command character.
+			// Stop here so the cases below never step past the terminator.
+			if (*src == '\0')
+				break;
+			
+			switch (*src)
 			{
 				// Insert bool 
 				case 'b':
