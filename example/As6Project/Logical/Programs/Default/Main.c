@@ -217,6 +217,16 @@ static void runFormatTest(void)
 		/* Fill with junk, then lay the format in - everything after the
 			terminator stays 'X' and must never reach the destination */
 		for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+
+		/* A format longer than the scratch buffer would overrun it and
+			leave no filler to detect an over-read with */
+		if(strlen(formatCases[i].Format) >= sizeof(Scratch)){
+
+			formatTestFail++;
+			continue;
+
+		}
+
 		strcpy(Scratch, formatCases[i].Format);
 
 		memset(Dest, 0, sizeof(Dest));
@@ -250,13 +260,30 @@ static void runFormatTest(void)
 	if( formatString(Dest, sizeof(Dest), 0, &Args) == STREXT_ERR_INVALID_INPUT ) formatTestPass++; else formatTestFail++;
 
 
-	/* Truncation - a trailing '%' with no room left must still terminate */
+	/* Trailing '%' reached with only the reserved null byte left. The loop
+		still has room to enter the '%' branch, so this is a genuine
+		pre-fix failure - the old code stepped onto the filler and copied it */
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	strcpy(Scratch, "abcdef%");
 
 	memset(Dest, 0, sizeof(Dest));
-	if( (formatString(Dest, 4, "abcdef%", &Args) == 3) && (strcmp(Dest, "abc") == 0) ) formatTestPass++; else formatTestFail++;
+	if( (formatString(Dest, 8, Scratch, &Args) == 6) && (strcmp(Dest, "abcdef") == 0) ) formatTestPass++; else formatTestFail++;
+
+
+	/* Destination fills before the format character is ever reached */
 
 	memset(Dest, 0, sizeof(Dest));
-	if( (formatString(Dest, 1, "%", &Args) == 0) && (strcmp(Dest, "") == 0) ) formatTestPass++; else formatTestFail++;
+	if( (formatString(Dest, 4, Scratch, &Args) == 3) && (strcmp(Dest, "abc") == 0) ) formatTestPass++; else formatTestFail++;
+
+
+	/* Only the reserved null byte fits - nothing is written at all */
+
+	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	strcpy(Scratch, "%");
+
+	memset(Dest, 0, sizeof(Dest));
+	if( (formatString(Dest, 1, Scratch, &Args) == 0) && (strcmp(Dest, "") == 0) ) formatTestPass++; else formatTestFail++;
 
 }
 

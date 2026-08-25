@@ -73,9 +73,9 @@ signed long formatString(plcstring* destination, unsigned long destSize, plcstri
 			src++;
 			
 			// A '%' at the very end of the source has no command character.
-			// Stop here so the cases below never step past the terminator.
+			// Leave the loop here - the cases below would step past the terminator.
 			if (*src == '\0')
-				break;
+				break; // exits the while loop, not a switch
 			
 			switch (*src)
 			{
