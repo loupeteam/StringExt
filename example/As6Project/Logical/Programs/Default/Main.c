@@ -254,7 +254,7 @@ static void runFormatTest(void)
 	StrExtArgs_typ		Args;
 	char				Scratch[64];
 	char				Dest[80];
-	char				Expected[16];
+	char				Expected[64];
 	signed long			Length;
 	unsigned long		Overrun;
 
@@ -400,6 +400,7 @@ static void runFormatTest(void)
 	brsftoa(Args.r[0], (unsigned long)Expected);
 
 	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
 	strcpy(Scratch, "%r");
 
 	memset(Dest, 0, sizeof(Dest));
@@ -407,6 +408,7 @@ static void runFormatTest(void)
 		&& (strcmp(Dest, Expected) == 0) ) formatTestPass++; else formatTestFail++;
 
 	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
 	strcpy(Scratch, "%f");
 
 	memset(Dest, 0, sizeof(Dest));
@@ -415,16 +417,21 @@ static void runFormatTest(void)
 
 
 	/* A real large enough to exercise the library's 16 byte scratch buffer,
-		which 1.5 leaves almost entirely untouched */
+		which 1.5 leaves almost entirely untouched. Expected is deliberately
+		wider than that buffer: brsftoa() cannot be told how much room it has,
+		so the length has to be measured somewhere it cannot do damage, and
+		then asserted to fit where formatString() will put it. */
 
 	Args.r[0]=	-1.2345e38;
 	brsftoa(Args.r[0], (unsigned long)Expected);
 
 	for(j=0; j<sizeof(Scratch); j++) Scratch[j]= 'X';
+	Scratch[sizeof(Scratch)-1]= '\0';
 	strcpy(Scratch, "%r");
 
 	memset(Dest, 0, sizeof(Dest));
-	if( (formatString(Dest, sizeof(Dest), Scratch, &Args) == (signed long)strlen(Expected))
+	if( (strlen(Expected) < 16)
+		&& (formatString(Dest, sizeof(Dest), Scratch, &Args) == (signed long)strlen(Expected))
 		&& (strcmp(Dest, Expected) == 0) ) formatTestPass++; else formatTestFail++;
 
 }
